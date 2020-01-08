@@ -7,12 +7,11 @@ from scipy import integrate
 
 class FirnModel(object):
     
-    def __init__(self,Ts,rhos,b,dt,ws):
+    def __init__(self,Ts,rhos,b,dt):
         self.Ts=Ts
         self.rhos=rhos
         self.b=b
         self.dt=dt
-        self.ws=ws
         
     def get_constants(self):
         self.rhoi=917.  #ice density......................kg/m^3
@@ -44,9 +43,11 @@ class FirnModel(object):
     def initial_conditions(self):
         V=self.V
         Ts=self.Ts #Temperature at surface
-        ws=self.ws #vertical velocity at surface
+
         rhos=self.rhos #Density at surface
         zs=self.zs  #surface
+        
+        ws=-self.b*(self.rhoi/rhos) #vertical velocity at surface
         T_init=Constant(Ts)
         w_init=Constant(ws)
         rho_init=Constant(rhos)
